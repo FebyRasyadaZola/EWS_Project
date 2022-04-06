@@ -2,17 +2,8 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\idnodeController;
+use App\Http\Controllers\chartcontroller;
 
-/*
-|--------------------------------------------------------------------------
-| Web Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register web routes for your application. These
-| routes are loaded by the RouteServiceProvider within a group which
-| contains the "web" middleware group. Now create something great!
-|
-*/
 
 Route::get('/', function () {
     return view('dashboard');
@@ -37,6 +28,14 @@ Route::get('/Node3', [idnodeController::class, 'n3']);
 
 Route::get('/Node4', [idnodeController::class, 'n4']);
 
+Route::get('/AllofData', [idnodeController::class, 'all']);
+
+Route::get('/grafik_WL', [chartController::class, 'Line_W']);
+
+Route::get('/grafik_T', [chartController::class, 'Line_T']);
+
+Route::get('/grafik_H', [chartController::class, 'Line_H']);
 
 
+Route::get('/grafik', [chartcontroller::class, 'LineChart',]);
 

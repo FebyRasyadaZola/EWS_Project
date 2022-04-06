@@ -56,26 +56,65 @@
             <span class="nav-link-text ms-1">Dashboard</span>
           </a>
         </li>
-        
+       
       </ul>
     </div>
  
   </aside>
   <main class="main-content position-relative max-height-vh-100 h-100 border-radius-lg ">
-    <!-- Navbar -->
-    
-    <!-- End Navbar -->
+    <!-- Chart Start -->
+  <script>
+     function myFunction() 
+     {
+       var chartType = document.getElementById("chart").values;
+       var chart = new CanvaJS.Chart("chartContainer",{
+         animationEnabled: true,
+         title{
+          text: "Grafik"
+         },
+       })
+
+      var chart = new CanvasJS.Chart("chartContainer", {
+        animationEnabled: true,
+        theme: "light2",
+        title:{
+          text: "Simple Line Chart"
+        },
+        data: [{        
+          type: "line",
+          yValueFormatString:"#,00.\""",
+          indexLabel:"{label} ({y})",
+          
+        }]
+      });
+      chart.render();
+       
+      }
+
+      <div id="chartContainer" style="height: 370px; width: 100%;"></div>
+      <script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>      
+
+
+
+    <!-- End  -->
     <div class="container-fluid py-4">
       <div class="row">
         <div class="col-12">
           <div class="card my-4">
             <div class="card-header p-0 position-relative mt-n4 mx-3 z-index-2">
               <div class="bg-gradient-primary shadow-primary border-radius-lg pt-4 pb-3">
-                <h6 class="text-white text-capitalize ps-3">Temperature Table</h6>
+                <h6 class="text-white text-capitalize ps-3">Table Pengukuran Early Warning System</h6>
               
+                <style type="text/css">
+                  .pagination li{
+                    float: left;
+                    list-style-type: none;
+                    margin:5px;
+                  }
+                </style>
                 <?php
                  $db = mysqli_connect("localhost", "root", "", "mydb");
-                 $result = mysqli_query($db, "SELECT idnode, Temperature, Waktu FROM id_node ORDER BY idnode "); 
+                 $result = mysqli_query($db, "SELECT idnode, WaterLevel, Temperature, Humidity, Waktu FROM id_node ORDER BY Waktu DESC "); 
                  $node = mysqli_fetch_assoc($result);
           
                 ?>
@@ -83,29 +122,36 @@
             </div>
             <div class="card-body px-0 pb-2">
               <div class="table-responsive p-0">
-                <table class="table align-items-center mb-0">
-                  <thead>
+                <table class="table align-items-center mb-0"> 
+                  <thead>                 
                     <tr>
-                      <th scope="col">Id Node</th>                    
-                      <th scope="col">Nilai</th>
+                      <th scope="col">Id Node</th>                      
+                      <th scope="col">Water Level</th>      
+                      <th scope="col">Temperature</th>
+                      <th scope="col">Humidity</th>
                       <th scope="col">Waktu</th>
                     </tr>
-                  </thead>
+                  </thead>                 
                   <tbody>
-                    @foreach($temperature as $item)
-                     <tr>
-                      <th scope="row"><?= $item->idnode?></th>
-                      <td><?= $item->Temperature?></td>
-                      <td><?= $item->Waktu?></td>
-                     </tr>
+                    @foreach($AllofData as $item)
+                      <tr>
+                       <th scope="row"><?= $item->idnode?></th>
+                       <td><?= $item->WaterLevel?></td>
+                       <td><?= $item->Temperature?></td>
+                       <td><?= $item->Humidity?></td>
+                       <td><?= $item->Waktu?></td>
+                      </tr>
                     @endforeach
                   </tbody>
                 </table>
                 <br/>
-                  <div class="center">
-                    {{$temperature->links()}}
-                  </div>    
+                <div class="center">
+                  {{$AllofData->links()}}
+                </div>
               </div>
+                <div class="panel">
+                  <div id="Level"></div>
+                </div> 
             </div>
           </div>
         </div>
@@ -205,6 +251,8 @@
   <script async defer src="https://buttons.github.io/buttons.js"></script>
   <!-- Control Center for Material Dashboard: parallax effects, scripts for the example pages etc -->
   <script src="../assets/js/material-dashboard.min.js?v=3.0.0"></script>
+  @yield('footer ')
+
 </body>
 
 </html>

@@ -34,6 +34,8 @@
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" rel="stylesheet">
   <!-- CSS Files -->
   <link id="pagestyle" href="../assets/css/material-dashboard.css?v=3.0.0" rel="stylesheet" />
+
+  
 </head>
 
 <body class="g-sidenav-show  bg-gray-200">
@@ -62,56 +64,41 @@
  
   </aside>
   <main class="main-content position-relative max-height-vh-100 h-100 border-radius-lg ">
-    <!-- Navbar -->
-    <nav class="navbar navbar-main navbar-expand-lg px-0 mx-4 shadow-none border-radius-xl" id="navbarBlur" navbar-scroll="true">
-      <div class="container-fluid py-1 px-3">
-        <nav aria-label="breadcrumb">
-          <ol class="breadcrumb bg-transparent mb-0 pb-0 pt-1 px-0 me-sm-6 me-5">
-            <li class="breadcrumb-item text-sm"><a class="opacity-5 text-dark" href="javascript:;">Pages</a></li>
-            <li class="breadcrumb-item text-sm text-dark active" aria-current="page">Tables</li>
-          </ol>
-          <h6 class="font-weight-bolder mb-0">Tables</h6>
-        </nav>
-        <div class="collapse navbar-collapse mt-sm-0 mt-2 me-md-0 me-sm-4" id="navbar">
-          <div class="ms-md-auto pe-md-3 d-flex align-items-center">
-            <div class="input-group input-group-outline">
-              <label class="form-label">Type here...</label>
-              <input type="text" class="form-control">
-            </div>
-          </div>
-          <ul class="navbar-nav  justify-content-end">
-            <li class="nav-item d-flex align-items-center">
-              <a href="javascript:;" class="nav-link text-body font-weight-bold px-0">
-                <i class="fa fa-user me-sm-1"></i>
-                <span class="d-sm-inline d-none">Sign In</span>
-              </a>
-            </li>
-            <li class="nav-item d-xl-none ps-3 d-flex align-items-center">
-              <a href="javascript:;" class="nav-link text-body p-0" id="iconNavbarSidenav">
-                <div class="sidenav-toggler-inner">
-                  <i class="sidenav-toggler-line"></i>
-                  <i class="sidenav-toggler-line"></i>
-                  <i class="sidenav-toggler-line"></i>
-                </div>
-              </a>
-            </li>
-            <li class="nav-item px-3 d-flex align-items-center">
-              <a href="javascript:;" class="nav-link text-body p-0">
-                <i class="fa fa-cog fixed-plugin-button-nav cursor-pointer"></i>
-              </a>
-            </li>
-            <li class="nav-item dropdown pe-2 d-flex align-items-center">
-              <a href="javascript:;" class="nav-link text-body p-0" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
-                <i class="fa fa-bell cursor-pointer"></i>
-              </a>
-              <ul class="dropdown-menu  dropdown-menu-end  px-2 py-3 me-sm-n4" aria-labelledby="dropdownMenuButton">
-              </ul>
-            </li>
-          </ul>
-        </div>
-      </div>
-    </nav>
-    <!-- End Navbar -->
+    <!-- Chart Start -->
+  <script>
+     function myFunction() 
+     {
+       var chartType = document.getElementById("chart").values;
+       var chart = new CanvaJS.Chart("chartContainer",{
+         animationEnabled: true,
+         title{
+          text: "Grafik"
+         },
+       })
+
+      var chart = new CanvasJS.Chart("chartContainer", {
+        animationEnabled: true,
+        theme: "light2",
+        title:{
+          text: "Simple Line Chart"
+        },
+        data: [{        
+          type: "line",
+          yValueFormatString:"#,00.\""",
+          indexLabel:"{label} ({y})",
+          
+        }]
+      });
+      chart.render();
+       
+      }
+
+      <div id="chartContainer" style="height: 370px; width: 100%;"></div>
+      <script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>      
+
+
+
+    <!-- End  -->
     <div class="container-fluid py-4">
       <div class="row">
         <div class="col-12">
@@ -131,7 +118,7 @@
 
                 <?php
                  $db = mysqli_connect("localhost", "root", "", "mydb");
-                 $result = mysqli_query($db, "SELECT idnode, WaterLevel, Waktu FROM id_node ORDER BY idnode  "); 
+                 $result = mysqli_query($db, "SELECT idnode, WaterLevel, Waktu FROM id_node ORDER BY Waktu DESC   "); 
                  $node = mysqli_fetch_assoc($result);
           
                 ?>
@@ -162,6 +149,9 @@
                   {{$waterlevel->links()}}
                 </div>
               </div>
+                <div class="panel">
+                  <div id="Level"></div>
+                </div> 
             </div>
           </div>
         </div>
@@ -261,6 +251,8 @@
   <script async defer src="https://buttons.github.io/buttons.js"></script>
   <!-- Control Center for Material Dashboard: parallax effects, scripts for the example pages etc -->
   <script src="../assets/js/material-dashboard.min.js?v=3.0.0"></script>
+  @yield('footer ')
+
 </body>
 
 </html>
